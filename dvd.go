@@ -1,9 +1,9 @@
-package dvd
+package main
 
 import (
 	"fmt"
 )
 
-func Hello() {
+func main() {
 	fmt.Println("hello")
 }
