@@ -9,5 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Created README
 - Avoided panic when used via command line
 - Created main and utils
