@@ -1,0 +1,28 @@
+# Wildcard matchers.
+*tmp
+*.db
+*-build
+*.log
+*~
+
+# Files and directories.
+.DS_Store
+.cache
+.dev
+.dir-locals.el
+.envrc
+.env*
+.idea
+.personalize
+.scannerwork
+.vscode
+build
+bundles
+debug
+debug.test
+coverage.out
+
+# Exclude these files.
+!empty
+!.keep
+!.gitkeep
