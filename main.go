@@ -8,7 +8,7 @@ import (
 
 func help() {
 	fmt.Println("Usage:")
-	fmt.Println("  go run ./testing/filter -dir {string} -sequence {number} -parallel {number}")
+	fmt.Println("  dvd -dir {string} -sequence {number} -parallel {number}")
 	fmt.Println("")
 	fmt.Println("  dir:      target root directory")
 	fmt.Println("  sequence: a number to specify running machine")
@@ -16,7 +16,7 @@ func help() {
 	fmt.Println("")
 }
 
-func parseFlags() (root string, sequence, parallel int) {
+func parseFlags(testing bool) (root string, sequence, parallel int) {
 	flag.StringVar(&root, "dir", "", "")
 	flag.IntVar(&sequence, "sequence", -1, "")
 	flag.IntVar(&parallel, "parallel", -1, "")
@@ -26,14 +26,18 @@ func parseFlags() (root string, sequence, parallel int) {
 	if root == "" || sequence < 0 || parallel < 1 {
 		help()
 
-		panic("invalid params")
+		if testing {
+			panic("invalid params")
+		}
+
+		os.Exit(1)
 	}
 
 	return root, sequence, parallel
 }
 
 func main() {
-	root, sequence, parallel := parseFlags()
+	root, sequence, parallel := parseFlags(false)
 
 	dirs, err := readdir(root)
 
