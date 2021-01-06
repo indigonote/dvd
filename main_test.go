@@ -36,7 +36,7 @@ func TestParseFlags(t *testing.T) {
 			flag.CommandLine.Set("parallel", p.parallel)
 
 			assert.Panics(t, func() {
-				parseFlags()
+				parseFlags(true)
 			}, fmt.Sprintf("case %d failed", idx))
 		}
 	}
