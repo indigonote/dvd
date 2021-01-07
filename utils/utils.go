@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"errors"
@@ -8,7 +8,7 @@ import (
 )
 
 // Readdir returns a list of flat directories from root path.
-func readdir(root string) ([]string, error) {
+func Readdir(root string) ([]string, error) {
 	files := []string{}
 
 	abs, err := filepath.Abs(root)
@@ -54,7 +54,7 @@ func gopath(base string, wildcard bool) string {
 //
 // - sequence: set machine number, starting from 0
 // - maxparallel: set allowed parallelism, starting from 1
-func chunk(given []string, sequence, maxparallel int) ([]string, error) {
+func Chunk(given []string, sequence, maxparallel int) ([]string, error) {
 	files := []string{}
 
 	if len(given) == 0 {
