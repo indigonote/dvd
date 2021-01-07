@@ -4,12 +4,16 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"path"
 	"path/filepath"
+	"strings"
 )
 
 // Readdir returns a list of flat directories from root path.
-func Readdir(root string) ([]string, error) {
+func Readdir(root string, excludes []string) ([]string, error) {
 	files := []string{}
+
+	root = filepath.Clean(root)
 
 	abs, err := filepath.Abs(root)
 
@@ -31,7 +35,26 @@ func Readdir(root string) ([]string, error) {
 			continue
 		}
 
-		files = append(files, gopath(fmt.Sprintf("%s/%s", root, d.Name()), true))
+		ignore := false
+
+		for _, e := range excludes {
+			a, err := filepath.Abs(e)
+
+			if err != nil {
+				continue
+			}
+
+			p := filepath.Clean(path.Join(abs, d.Name()))
+
+			if strings.HasPrefix(p, a) {
+				ignore = true
+				break
+			}
+		}
+
+		if !ignore {
+			files = append(files, gopath(fmt.Sprintf("%s/%s", root, d.Name()), true))
+		}
 	}
 
 	return files, nil

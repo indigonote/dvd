@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 	Short: "Divide a list of directories into smaller chunks.",
 	Run: func(cmd *cobra.Command, args []string) {
 
-		dirs, err := utils.Readdir(directory)
+		dirs, err := utils.Readdir(directory, excludes)
 
 		if err != nil {
 			fmt.Println(err)
@@ -34,13 +34,6 @@ var rootCmd = &cobra.Command{
 		}
 	},
 }
-
-// Global flags.
-var (
-	directory string
-	sequence  int
-	parallel  int
-)
 
 // Execute from main package.
 func Execute() {

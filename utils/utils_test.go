@@ -22,7 +22,7 @@ func TestReaddir(t *testing.T) {
 
 		require.Nil(t, err)
 
-		got, err := Readdir(abs)
+		got, err := Readdir(abs, []string{})
 
 		assert.Nil(t, err)
 		assert.Greater(t, len(got), 1)
@@ -30,7 +30,7 @@ func TestReaddir(t *testing.T) {
 
 	{
 		// Fails on non-existent directory.
-		got, err := Readdir("whatever-non-existent")
+		got, err := Readdir("whatever-non-existent", []string{})
 
 		assert.NotNil(t, err)
 		assert.Equal(t, []string{}, got)
