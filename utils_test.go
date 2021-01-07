@@ -38,8 +38,8 @@ func TestReaddir(t *testing.T) {
 }
 
 func TestGopath(t *testing.T) {
-	assert.Equal(t, "hello/world", gopath("hello", "world", false))
-	assert.Equal(t, "hello/world/...", gopath("hello", "world", true))
+	assert.Equal(t, "./hello", gopath("hello", false))
+	assert.Equal(t, "./hello/...", gopath("hello", true))
 }
 
 func TestChunk(t *testing.T) {
