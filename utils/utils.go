@@ -9,8 +9,14 @@ import (
 	"strings"
 )
 
+// Output formats
+const (
+	GoFormat     = "go"
+	NodeJSFormat = "node"
+)
+
 // Readdir returns a list of flat directories from root path.
-func Readdir(root string, excludes []string) ([]string, error) {
+func Readdir(root, format string, excludes []string) ([]string, error) {
 	files := []string{}
 
 	root = filepath.Clean(root)
@@ -52,8 +58,17 @@ func Readdir(root string, excludes []string) ([]string, error) {
 			}
 		}
 
-		if !ignore {
-			files = append(files, gopath(fmt.Sprintf("%s/%s", root, d.Name()), true))
+		if ignore {
+			continue
+		}
+
+		target := fmt.Sprintf("./%s/%s", root, d.Name())
+
+		switch format {
+		case GoFormat:
+			files = append(files, gopath(target, true))
+		default:
+			files = append(files, target)
 		}
 	}
 
@@ -66,6 +81,8 @@ func Readdir(root string, excludes []string) ([]string, error) {
 // - no wildcard: /somedir --> /somedir
 // - wildcard:    /somedir --> /somedir/...
 func gopath(base string, wildcard bool) string {
+	base = path.Clean(base)
+
 	if wildcard {
 		return fmt.Sprintf("./%s/...", base)
 	}
