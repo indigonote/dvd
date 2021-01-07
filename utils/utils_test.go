@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ func TestReaddir(t *testing.T) {
 
 		require.Nil(t, err)
 
-		got, err := readdir(abs)
+		got, err := Readdir(abs, GoFormat, []string{})
 
 		assert.Nil(t, err)
 		assert.Greater(t, len(got), 1)
@@ -30,7 +30,7 @@ func TestReaddir(t *testing.T) {
 
 	{
 		// Fails on non-existent directory.
-		got, err := readdir("whatever-non-existent")
+		got, err := Readdir("whatever-non-existent", GoFormat, []string{})
 
 		assert.NotNil(t, err)
 		assert.Equal(t, []string{}, got)
@@ -117,7 +117,7 @@ func TestChunk(t *testing.T) {
 		}
 
 		for idx, p := range pats {
-			got, err := chunk(p.given, p.sequence, p.maxparallel)
+			got, err := Chunk(p.given, p.sequence, p.maxparallel)
 
 			assert.Nilf(t, err, fmt.Sprintf("case %d", idx))
 			assert.Equalf(t, p.expected, got, fmt.Sprintf("case %d", idx))
@@ -162,7 +162,7 @@ func TestChunk(t *testing.T) {
 		}
 
 		for idx, p := range pats {
-			got, err := chunk(p.given, p.sequence, p.maxparallel)
+			got, err := Chunk(p.given, p.sequence, p.maxparallel)
 
 			assert.NotNilf(t, err, spew.Sdump(p))
 			assert.Equalf(t, []string{}, got, fmt.Sprintf("case %d", idx))
