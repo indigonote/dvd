@@ -53,5 +53,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(chunks)
+	for _, c := range chunks {
+		fmt.Printf("%s ", c)
+	}
 }
