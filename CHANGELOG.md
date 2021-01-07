@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-01-08
+
+### Added
+
+- Go and NodeJS output formats
+- Exclude flag to ignore specific directories
+
+### Changed
+
+- Switched to Cobra CLI
+
 ## [0.1.1] - 2021-01-08
 
 ### Changed

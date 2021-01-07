@@ -1,3 +1,3 @@
-package main
+package cmd
 
 // Just for compile check

@@ -1,15 +1,25 @@
-package main
+package utils
 
 import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"path"
 	"path/filepath"
+	"strings"
+)
+
+// Output formats
+const (
+	GoFormat     = "go"
+	NodeJSFormat = "node"
 )
 
 // Readdir returns a list of flat directories from root path.
-func readdir(root string) ([]string, error) {
+func Readdir(root, format string, excludes []string) ([]string, error) {
 	files := []string{}
+
+	root = filepath.Clean(root)
 
 	abs, err := filepath.Abs(root)
 
@@ -31,7 +41,35 @@ func readdir(root string) ([]string, error) {
 			continue
 		}
 
-		files = append(files, gopath(fmt.Sprintf("%s/%s", root, d.Name()), true))
+		ignore := false
+
+		for _, e := range excludes {
+			a, err := filepath.Abs(e)
+
+			if err != nil {
+				continue
+			}
+
+			p := filepath.Clean(path.Join(abs, d.Name()))
+
+			if strings.HasPrefix(p, a) {
+				ignore = true
+				break
+			}
+		}
+
+		if ignore {
+			continue
+		}
+
+		target := fmt.Sprintf("./%s/%s", root, d.Name())
+
+		switch format {
+		case GoFormat:
+			files = append(files, gopath(target, true))
+		default:
+			files = append(files, target)
+		}
 	}
 
 	return files, nil
@@ -43,6 +81,8 @@ func readdir(root string) ([]string, error) {
 // - no wildcard: /somedir --> /somedir
 // - wildcard:    /somedir --> /somedir/...
 func gopath(base string, wildcard bool) string {
+	base = path.Clean(base)
+
 	if wildcard {
 		return fmt.Sprintf("./%s/...", base)
 	}
@@ -54,7 +94,7 @@ func gopath(base string, wildcard bool) string {
 //
 // - sequence: set machine number, starting from 0
 // - maxparallel: set allowed parallelism, starting from 1
-func chunk(given []string, sequence, maxparallel int) ([]string, error) {
+func Chunk(given []string, sequence, maxparallel int) ([]string, error) {
 	files := []string{}
 
 	if len(given) == 0 {
