@@ -24,14 +24,14 @@ func readdir(root string) ([]string, error) {
 	}
 
 	// The first record represents the module root.
-	files = append(files, gopath(abs, "", false))
+	files = append(files, gopath(root, false))
 
 	for _, d := range info {
 		if !d.IsDir() {
 			continue
 		}
 
-		files = append(files, gopath(abs, d.Name(), true))
+		files = append(files, gopath(fmt.Sprintf("%s/%s", root, d.Name()), true))
 	}
 
 	return files, nil
@@ -42,12 +42,12 @@ func readdir(root string) ([]string, error) {
 // e.g.
 // - no wildcard: /somedir --> /somedir
 // - wildcard:    /somedir --> /somedir/...
-func gopath(dir, base string, wildcard bool) string {
+func gopath(base string, wildcard bool) string {
 	if wildcard {
-		return fmt.Sprintf("%s/%s/...", dir, base)
+		return fmt.Sprintf("./%s/...", base)
 	}
 
-	return fmt.Sprintf("%s/%s", dir, base)
+	return fmt.Sprintf("./%s", base)
 }
 
 // Chunk returns a filtered list based on sequence number and max parallelism.
