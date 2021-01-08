@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - "*.*.*"
-    branches:
-      - feature/release
 
 jobs:
   build:
