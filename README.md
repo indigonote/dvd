@@ -1,7 +1,6 @@
 # dvd
 
 ![test](https://github.com/indigonote/dvd/workflows/test/badge.svg)
-![release](https://github.com/indigonote/dvd/workflows/release/badge.svg)
 
 `dvd` is a command line utility to divide a list of directories into smaller chunks, to run your tests in parallel.
 
