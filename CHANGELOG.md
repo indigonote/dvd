@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- GitHub Actions for test and release
+- Implemented build configuration for Linux and MacOS
+
 ## [0.2.0] - 2021-01-08
 
 ### Added
